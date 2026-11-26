@@ -1,16 +1,77 @@
-# React + Vite
+# Juanchos — Sistema de Gestión de Restaurante
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interfaz web para la administración operativa y comercial del restaurante **Juanchos**. Desarrollada con una arquitectura modular basada en *features*, lista para consumir una API REST en Laravel.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React + Vite
+- **Estilos:** Tailwind CSS
+- **Íconos:** Lucide React
+- **Backend (API):** Laravel + MySQL *(en desarrollo)*
 
-## React Compiler
+## Módulos del sistema
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Operación
+- [ ] **Dashboard:** Resumen general y métricas del turno.
+- [ ] **Pedidos:** Toma y gestión de órdenes en local y delivery.
+- [ ] **Menú:** Administración de platos, combos y precios.
+- [ ] **Inventario:** Control de insumos y stock.
 
-## Expanding the Oxlint configuration
+### Gestión
+- [x] **Clientes:** Directorio con búsqueda en tiempo real, vista de consulta rápida y CRUD conectado a API REST.
+- [ ] **Empleados:** Control de personal y roles.
+- [ ] **Deliverys:** Seguimiento de repartidores y entregas.
+- [ ] **Pagos:** Registro de transacciones y métodos de pago.
+- [ ] **Reportes:** Estadísticas de ventas y rendimiento.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Estructura del proyecto
+
+```text
+src/
+├── api/
+│   └── apiClient.js            # Cliente HTTP base (fetch) configurado para Laravel
+├── componnents/
+│   └── Sidebar.jsx             # Navegación lateral principal
+├── features/
+│   └── clientes/               # Módulo de clientes desacoplado por capas
+│       ├── components/         # Tabla y modal de formulario/consulta
+│       ├── hooks/              # Custom hook (useClientes) con estado y filtros
+│       ├── services/           # Peticiones CRUD hacia /api/clientes
+│       └── ClientesPage.jsx    # Vista principal del módulo
+└── App.jsx
+```
+
+## Instalación y ejecución local
+
+1. **Clonar el repositorio e instalar dependencias:**
+   ```bash
+   git clone [https://github.com/franchesiop/juanchos_sistema.git](https://github.com/franchesiop/juanchos_sistema.git)
+   cd juanchos_sistema
+   npm install
+   ```
+
+2. **Configurar variables de entorno:**
+   Copia el archivo de ejemplo y ajusta la URL de tu servidor Laravel si es necesario:
+   ```bash
+   cp .env.example .env
+   ```
+   Contenido por defecto de `.env`:
+   ```env
+   VITE_API_URL=http://localhost:8000/api
+   ```
+
+3. **Levantar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+## Requisitos de la API (Laravel)
+
+El frontend espera los siguientes endpoints estándar bajo el prefijo `/api`:
+
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/api/clientes` | Lista todos los clientes registrados |
+| `POST` | `/api/clientes` | Registra un nuevo cliente |
+| `PUT` | `/api/clientes/{id}` | Actualiza los datos de un cliente |
+| `DELETE` | `/api/clientes/{id}` | Elimina un cliente (`204 No Content`) |
